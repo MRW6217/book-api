@@ -7,7 +7,7 @@ on:
 
 env:
   DOTNET_VERSION: '9.0'
-  PUBISH_DIR: 'PUBLISH'
+  PUBLISH_DIR: 'PUBLISH'
 
 jobs:
   build-and-deploy:

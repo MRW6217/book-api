@@ -17,12 +17,12 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Dependencies
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Restore Package
+      - name: Restore Packages
         run: dotnet restore
 
       - name: Build API
@@ -32,14 +32,11 @@ jobs:
         run: dotnet test --configuration Release --no-build --verbosity normal
 
       - name: Publish
-        run: dotnet publish -c Release -o ${{ env.PUBLISH_DIR }}
+        run: dotnet publish -c Release --no-build -o ${{ env.PUBLISH_DIR }}
 
-      - name: Deploy to Azure Web App Service
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: "Book-API"
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ${{ env.PUBLISH_DIR }}
-          
-
-
